@@ -1,0 +1,242 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-image: url(../Img/fondoparking.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+main {
+    width: 100%;
+    padding: 20px;
+    margin: auto;
+    margin-top: 100px;
+}
+
+.contenedor__todo {
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    position: relative;
+}
+
+.caja__trasera {
+    width: 100%;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    background-color: #0055B8;
+}
+
+.caja__trasera div {
+    margin: 100px 40px;
+    color: white;
+    transition: all 500ms;
+}
+
+.caja__trasera div p,
+.caja__trasera button {
+    margin-top: 30px;
+}
+
+.caja__trasera div h3 {
+    font-weight: 400;
+    font-size: 26px;
+}
+
+.caja__trasera div p {
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.caja__trasera button {
+    padding: 10px 40px;
+    border: 2px solid #fff;
+    font-size: 14px;
+    background: transparent;
+    font-weight: 600;
+    cursor: pointer;
+    color: white;
+    outline: none;
+    transition: all 300ms;
+}
+
+.caja__trasera button:hover {
+    background: #fff;
+    color: #0055B8;
+}
+
+.contenedor__login-register {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 380px;
+    position: relative;
+    top: -185px;
+    left: 10px;
+    transition: left 500ms cubic-bezier(0.175, 0.885, 0.320, 1.275);
+}
+
+.contenedor__login-register form {
+    width: 100%;
+    padding: 80px 20px;
+    background: white;
+    position: absolute;
+    border-radius: 20px;
+}
+
+.contenedor__login-register form h2 {
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #0055B8;
+}
+
+.contenedor__login-register form input, .select__role {
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+    border: none;
+    background: #F2F2F2;
+    font-size: 16px;
+    outline: none;
+}
+
+.contenedor__login-register form button {
+    padding: 10px 40px;
+    margin-top: 40px;
+    border: none;
+    font-size: 14px;
+    background: #0055B8;
+    font-weight: 600;
+    cursor: pointer;
+    color: white;
+    outline: none;
+}
+
+.formulario__login {
+    opacity: 1;
+    display: block;
+}
+
+.formulario__register {
+    display: none;
+}
+
+@media screen and (max-width: 850px) {
+    main {
+        margin-top: 50px;
+    }
+
+    .caja__trasera {
+        max-width: 350px;
+        height: 300px;
+        flex-direction: column;
+        margin: auto;
+    }
+
+    .caja__trasera div {
+        margin: 0px;
+        position: absolute;
+    }
+
+    .contenedor__login-register {
+        top: -10px;
+        left: -5px;
+        margin: auto;
+    }
+
+    .contenedor__login-register form {
+        position: relative;
+    }
+}
+/* Personalización del fondo de las modales */
+.modal-content {
+    background-color: white; /* Fondo oscuro, similar al tema */
+    color: white; /* Texto en blanco para contraste */
+    border-radius: 10px; /* Bordes redondeados */
+    border: none; /* Sin borde */
+}
+
+/* Títulos de las modales */
+.modal-title {
+    color: #ffffff; /* Títulos en blanco */
+    font-weight: 700;
+}
+
+/* Fondo de las modales */
+.modal-backdrop.show {
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro translúcido */
+}
+
+/* Estilo para los botones dentro de las modales */
+.modal-footer .btn {
+    background-color: #00468C; /* Botón de color azul cálido */
+    color: white; /* Texto oscuro en el botón */
+    border: none;
+    border-radius: 50px; /* Bordes redondeados */
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+/* Hover en los botones */
+.modal-footer .btn:hover {
+    background-color: #0055B8; /* Cambio a un tono más oscuro */
+    transform: translateY(-2px); /* Efecto de elevación */
+}
+
+/* Cabeceras uniformes */
+.modal-header {
+    background-color: #0055B8; /* Fondo de cabecera rojo oscuro */
+    color: #ffffff; /* Títulos en blanco */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+/* Modal de "Correo Ya Registrado" y otras modales */
+#correoYaRegistradoModal .modal-header,
+#registroExitosoModal .modal-header,
+#inicioSesionExitosoModal .modal-header,
+#correoContraseñaIncorrectosModal .modal-header {
+    background-color: #0055B8; /* Unifica el color de la cabecera */
+}
+
+/* Mejorar el aspecto del texto dentro de las modales */
+.modal-body p {
+    font-size: 1.1rem;
+    color: #000000; /* Texto en negro para el cuerpo */
+    line-height: 1.5;
+}
+
+/* Mejorar el aspecto del fondo y transiciones */
+.modal.fade .modal-dialog {
+    transition: transform 0.3s ease-out; /* Suaviza la entrada de la modal */
+}
+
+.modal.fade.show .modal-dialog {
+    transform: translateY(0); /* Entrada suave desde abajo */
+}
+
+/* Fondo de la página detrás de las modales */
+body.modal-open {
+    overflow: hidden; /* Evita el scroll cuando las modales están abiertas */
+}
+
+/* Ajustes adicionales para la modal de "Correo o Contraseña Incorrectos" */
+#correoContraseñaIncorrectosModal .modal-body p {
+    color: #000000; /* Texto en negro */
+}
+
+/* Modal "Correo o Contraseña Incorrectos" - Títulos en blanco */
+#correoContraseñaIncorrectosModal .modal-title {
+    color: #ffffff; /* Título blanco */
+}

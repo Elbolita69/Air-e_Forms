@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Censo</title>
+    <link rel="icon" type="image/png" href="../static/IMG/IconoAir-e.webp">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="../static/CSS/censo.css">
+    <link rel="stylesheet" href="../static/CSS/header&footnote.css">
+    <style>
+        #map {
+            height: 300px; /* Mapa más pequeño */
+            width: 80%; /* Ancho reducido */
+            margin: 20px auto; /* Centrado */
+            display: none; /* Oculto inicialmente */
+        }
+        .icono-rojo {
+            filter: hue-rotate(120deg); /* Cambiar el color del icono a rojo */
+        }
+    </style>
+</head>
+<body>
+    <!-- Encabezado -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow p-3">
+        <div class="container">
+            <a class="navbar-brand" href="../templates/index.html">
+                <img src="../static/IMG/LogoAir-e.webp" alt="Logo" width="130">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="../templates/index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../templates/login.html">Censo (Login)</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../templates/censo.html">Censo Directo (Prueba)</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Sobre Nosotros</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container mt-5">
+        <h2>Formulario de Censo</h2>
+        <form id="censoForm">
+            <div class="mb-3">
+                <label for="fecha" class="form-label">Fecha:</label>
+                <input type="date" id="fecha" class="form-control" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="brigada" class="form-label">Nombre de Brigada:</label>
+                <select id="brigada" class="form-select" required>
+                    <option value="" selected>Seleccionar</option>
+                    <option value="Richard Luis de Lima Guette">Richard Luis de Lima Guette</option>
+                    <option value="Carlos Andrés Ospina Castro">Carlos Andrés Ospina Castro</option>
+                    <option value="Yair Nicolas Redondo Epiayu">Yair Nicolas Redondo Epiayu</option>
+                    <option value="Coronado Jiménez Édison Enrique">Coronado Jiménez Édison Enrique</option>
+                    <option value="Ricardo Pérez Muñoz">Ricardo Pérez Muñoz</option>
+                    <option value="Senén Alcides Arroyo Cervantes">Senén Alcides Arroyo Cervantes</option>
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label for="proyecto" class="form-label">Proyecto:</label>
+                <select id="proyecto" class="form-select" required>
+                    <option value="" selected>Seleccionar</option>
+                    <option value="Proyecto 123">Proyecto 123</option>
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label for="numPoste" class="form-label">Número de Poste en el Plano:</label>
+                <input type="number" id="numPoste" class="form-control" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="coordenada" class="form-label">Coordenada (lat, lon):</label>
+                <input type="text" id="coordenada" class="form-control" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="elementoExistente" class="form-label">Elemento Existente:</label>
+                <select id="elementoExistente" class="form-select" required>
+                    <option value="" selected>Seleccionar</option>
+                    <option value="N/A">N/A</option>
+                    <option value="Cortacircuitos/Seccionador">Cortacircuitos/Seccionador</option>
+                    <option value="Transformador de Distribución">Transformador de Distribución</option>
+                    <option value="Interruptor de Potencia">Interruptor de Potencia</option>
+                    <option value="Reconectador">Reconectador</option>
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label for="tipoPoste" class="form-label">Tipo de Poste:</label>
+                <select id="tipoPoste" class="form-select" required>
+                    <option value="" selected>Seleccionar</option>
+                    <option value="BT">BT</option>
+                    <option value="MT">MT</option>
+                    <option value="MT-BT">MT-BT</option>
+                    <option value="Torre STR">Torre STR</option>
+                    <option value="Sin identificar">Sin identificar</option>
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label for="material" class="form-label">Material:</label>
+                <select id="material" class="form-select" required>
+                    <option value="" selected>Seleccionar</option>
+                    <option value="MADERA">MADERA</option>
+                    <option value="CONCRETO">CONCRETO</option>
+                    <option value="FIBRA">FIBRA</option>
+                    <option value="METALICO">METALICO</option>
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label for="altura" class="form-label">Altura:</label>
+                <select id="altura" class="form-select" required>
+                    <option value="" selected>Seleccionar</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="14">14</option>
+                    <option value="16">16</option>
+                    <option value="18">18</option>
+                    <option value="25">25</option>
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label for="fotoPlaca" class="form-label">Foto de la Placa:</label>
+                <input type="file" id="fotoPlaca" class="form-control" accept=".png, .jpeg, .jpg" required>
+                <small class="text-muted">Formatos permitidos: .png, .jpeg, .jpg</small>
+            </div>
+            
+            <div class="mb-3">
+                <label for="fotoDetallada" class="form-label">Foto Detallada:</label>
+                <input type="file" id="fotoDetallada" class="form-control" accept=".png, .jpeg, .jpg" required>
+                <small class="text-muted">Formatos permitidos: .png, .jpeg, .jpg</small>
+            </div>
+            
+            <div class="mb-3">
+                <label for="fotoPanoramica" class="form-label">Foto Panorámica:</label>
+                <input type="file" id="fotoPanoramica" class="form-control" accept=".png, .jpeg, .jpg" required>
+                <small class="text-muted">Formatos permitidos: .png, .jpeg, .jpg</small>
+            </div>
+            
+            <div class="mb-3">
+                <label for="cantidadPostes" class="form-label">Cantidad de PRST:</label>
+                <select id="cantidadPostes" class="form-select" required>
+                    <option value="" selected>Seleccionar</option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </select>
+            </div>
+            
+            <div id="postesContainer" class="mt-4">
+                <!-- Aquí se generarán los formularios de PRST dinámicamente -->
+            </div>
+            
+            <div class="mb-3">
+                <label for="observaciones" class="form-label">Observaciones:</label>
+                <textarea id="observaciones" class="form-control" rows="3"></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+            <button type="button" class="btn btn-success mt-3" onclick="mostrarMapa()">Mostrar Mapa</button>
+            <button type="button" class="btn btn-warning mt-3" onclick="exportarKML()">Exportar como KML</button>
+        </form>
+    </div>
+
+    <!-- Mapa interactivo -->
+    <div id="map"></div>
+
+    <!-- Modal de confirmación -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Información Guardada</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Fecha seleccionada:</strong> <span id="fechaSeleccionada"></span></p>
+                    <p><strong>Fecha y hora exacta de envío:</strong> <span id="fechaHoraExacta"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de error -->
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Error</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="errorMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer class="bg-white shadow p-3 mt-5">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="../static/IMG/IconoAir-e.webp" alt="Ícono Air-e" width="80">
+                    <p><strong>Dirección:</strong><br>
+                    Cra 57 No 99A - 65<br>
+                    Torres del Atlántico.<br>
+                    Barranquilla, Atlántico.</p>
+                </div>
+                <div class="col-md-4">
+                    <p><strong class="text-primary">Líneas de atención:</strong><br>
+                    Fijo o celular: 115<br>
+                    Línea nacional gratuita: 018000 930 135<br>
+                    Línea fija: (605) 322 5016<br>
+                    PBX Atlántico: (605) 361 1000<br>
+                    PBX Magdalena: (605) 423 7097<br>
+                    PBX Guajira: (605) 727 9814</p>
+                </div>
+                <div class="col-md-4">
+                    <p><strong class="text-primary">Síguenos</strong></p>
+                    <div class="social-icons">
+                        <a href="#"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#"><i class="bi bi-youtube"></i></a>
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                    </div>
+                    <p class="politicas-link"><a href="#">Políticas tratamiento de datos »</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <div class="footer-text">
+        <p>&copy; 2025 Air-e Censo. Air-e intervenida 2024.</p>
+    </div>
+    <script src="../static/JS/censo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Inicializar el mapa
+        let map;
+        let postes = JSON.parse(localStorage.getItem('postes')) || [];
+
+        // Iconos personalizados
+        const iconoAzul = L.icon({
+            iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png', // Icono azul (PNG)
+            iconSize: [32, 32], // Tamaño del icono
+            iconAnchor: [16, 32], // Punto de anclaje
+        });
+
+        const iconoRojo = L.icon({
+            iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png', // Icono rojo (PNG)
+            iconSize: [32, 32],
+            iconAnchor: [16, 32],
+            className: 'icono-rojo' // Clase CSS para cambiar el color a rojo
+        });
+
+        // Función para mostrar el mapa
+        function mostrarMapa() {
+            if (!map) {
+                map = L.map('map').setView([10.9639, -74.7964], 13); // Coordenadas de Barranquilla
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(map);
+                document.getElementById('map').style.display = 'block'; // Mostrar el mapa
+            }
+            generarMapa();
+        }
+
+        // Función para guardar los datos del formulario
+        function guardarDatos() {
+            const poste = {
+                fecha: document.getElementById("fecha").value,
+                brigada: document.getElementById("brigada").value,
+                proyecto: document.getElementById("proyecto").value,
+                numPoste: document.getElementById("numPoste").value,
+                coordenada: document.getElementById("coordenada").value,
+                elementoExistente: document.getElementById("elementoExistente").value,
+                tipoPoste: document.getElementById("tipoPoste").value,
+                material: document.getElementById("material").value,
+                altura: document.getElementById("altura").value,
+                observaciones: document.getElementById("observaciones").value
+            };
+            postes.push(poste);
+            localStorage.setItem('postes', JSON.stringify(postes));
+            alert("Datos guardados correctamente.");
+        }
+
+        // Función para generar el mapa con los postes guardados
+        function generarMapa() {
+            if (!map) return;
+
+            // Limpiar marcadores anteriores
+            map.eachLayer(layer => {
+                if (layer instanceof L.Marker) {
+                    map.removeLayer(layer);
+                }
+            });
+
+            // Contar repeticiones de postes
+            const contadorPostes = {};
+            postes.forEach(poste => {
+                const id = poste.numPoste;
+                contadorPostes[id] = (contadorPostes[id] || 0) + 1;
+            });
+
+            // Añadir marcadores
+            postes.forEach(poste => {
+                const coordenadas = poste.coordenada.split(",");
+                const lat = parseFloat(coordenadas[0]);
+                const lon = parseFloat(coordenadas[1]);
+
+                if (!isNaN(lat) && !isNaN(lon)) {
+                    const icono = contadorPostes[poste.numPoste] > 1 ? iconoRojo : iconoAzul;
+                    L.marker([lat, lon], { icon: icono }).addTo(map)
+                        .bindPopup(`Poste: ${poste.numPoste}`)
+                        .openPopup();
+                }
+            });
+        }
+
+        // Función para exportar los postes como KML
+        function exportarKML() {
+            let kmlContent = `<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>`;
+
+            postes.forEach(poste => {
+                const coordenadas = poste.coordenada.split(",");
+                const lat = parseFloat(coordenadas[0]);
+                const lon = parseFloat(coordenadas[1]);
+
+                if (!isNaN(lat) && !isNaN(lon)) {
+                    kmlContent += `
+    <Placemark>
+      <name>Poste ${poste.numPoste}</name>
+      <description>
+        <![CDATA[
+          <p><strong>Brigada:</strong> ${poste.brigada}</p>
+          <p><strong>Proyecto:</strong> ${poste.proyecto}</p>
+          <p><strong>Coordenada:</strong> ${poste.coordenada}</p>
+        ]]>
+      </description>
+      <Point>
+        <coordinates>${lon},${lat},0</coordinates>
+      </Point>
+    </Placemark>`;
+                }
+            });
+
+            kmlContent += `
+  </Document>
+</kml>`;
+
+            // Crear un archivo KML
+            const kmlBlob = new Blob([kmlContent], { type: "application/vnd.google-earth.kml+xml" });
+            const url = URL.createObjectURL(kmlBlob);
+
+            // Crear un enlace de descarga
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "postes.kml";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            // Borrar el localStorage después de exportar
+            localStorage.removeItem('postes');
+            postes = [];
+            alert("KML exportado y datos borrados. Puedes empezar un nuevo proyecto.");
+        }
+
+        // Evento para guardar datos al enviar el formulario
+        document.getElementById("censoForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            guardarDatos();
+        });
+    </script>
+</body>
+</html>
